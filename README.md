@@ -1,2 +1,3 @@
 # snippetbox
-Simple web app based on golang
+
+A very simple alternative to the [pastebin](https://pastebin.com/) project
