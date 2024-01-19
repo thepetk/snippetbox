@@ -1,13 +1,15 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+)
 
-func (app *application) routes(staticAddr string) *http.ServeMux {
+func (app *application) routes() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", app.home)
 	mux.HandleFunc("/snippet", app.showSnippet)
 	mux.HandleFunc("/snippet/create", app.createSnippet)
-	fileServer := http.FileServer(http.Dir(staticAddr))
+	fileServer := http.FileServer(http.Dir(app.cfg.GetStaticDir()))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 	return mux
 }
