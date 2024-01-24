@@ -85,7 +85,7 @@ func (a *application) GetDSN() (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", dbUser, dbPass, a.GetDBName(), a.GetDBSSLMode()), nil
+	return fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s port=5433", dbUser, dbPass, a.GetDBName(), a.GetDBSSLMode()), nil
 }
 
 func (a *application) OpenDB() (*sql.DB, error) {
