@@ -13,19 +13,21 @@ import (
 
 type application struct {
 	logger   *log.Logger
-	snippets *models.Snippet
+	snippets *models.SnippetModel
 	cfg      *Config
 }
 
 func main() {
 	// Initialize application
 	app := &application{
-		logger: log.New(os.Stdout, "", log.Ldate|log.Ltime),
+		logger:   log.New(os.Stdout, "", log.Ldate|log.Ltime),
+		snippets: &models.SnippetModel{},
 	}
 
 	// Configure application
 	app.cfg = &Config{}
 	db, err := app.InitConfig()
+	app.snippets.SetDB(db)
 
 	if err != nil {
 		app.logger.Fatal("ERROR\t", err)
