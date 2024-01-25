@@ -6,22 +6,28 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"text/template"
 
 	_ "github.com/lib/pq"
 	models "github.com/thepetk/snippetbox/cmd/models"
 )
 
 type application struct {
-	logger   *log.Logger
-	snippets *models.SnippetModel
-	cfg      *Config
+	logger        *log.Logger
+	snippets      *models.SnippetModel
+	cfg           *Config
+	templateCache map[string]*template.Template
 }
 
 func main() {
-	// Initialize application
+	templateCache, err := newTemplateCache("./ui/html/")
+	if err != nil {
+		return
+	}
 	app := &application{
-		logger:   log.New(os.Stdout, "", log.Ldate|log.Ltime),
-		snippets: &models.SnippetModel{},
+		logger:        log.New(os.Stdout, "", log.Ldate|log.Ltime),
+		snippets:      &models.SnippetModel{},
+		templateCache: templateCache,
 	}
 
 	// Configure application
